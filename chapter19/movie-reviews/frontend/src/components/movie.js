@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MovieDataService from "../services/movies";
 import { Link } from "react-router-dom";
 import moment from "moment";
+
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
