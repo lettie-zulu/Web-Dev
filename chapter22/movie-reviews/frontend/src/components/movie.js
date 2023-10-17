@@ -58,10 +58,26 @@ const Movie = (props) => {
             <h2>Reviews</h2>
             <br></br>
             {movie.reviews.map((review, index) => {
+
+              const deleteReview = (reviewId, index) => {
+                MovieDataService.deleteReview(reviewId, props.user.id)
+                  .then(response => {
+                    setMovie((currState) => {
+                      currState.reviews.splice(index, 1)
+                      return ({
+                        ...currState
+                      })
+                    })
+                  })
+                  .catch(e => {
+                    console.log(e)
+                  })
+              }
+
               return (
                 <Media key={index}>
                   <Media.Body>
-                    <h5>{review.name+" reviewed on "} {moment(review.date).format("Do MMMM YYYY")}</h5>
+                    <h5>{review.name + " reviewed on "} {moment(review.date).format("Do MMMM YYYY")}</h5>
                     <p>{review.review}</p>
                     {props.user && props.user.id === review.user_id &&
                       <Row>
@@ -72,7 +88,10 @@ const Movie = (props) => {
                           state: { currentReview: review }
                         }}>Edit</Link>
                         </Col>
-                        <Col><Button variant="link">Delete</Button></Col>
+                        <Col><Button variant="link" onClick={() => deleteReview(review._id, index)}>
+                          Delete
+                        </Button>
+                        </Col>
                       </Row>
                     }
                   </Media.Body>
